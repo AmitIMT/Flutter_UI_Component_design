@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 
 
 class CallsPage extends StatelessWidget {
@@ -6,8 +7,11 @@ class CallsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('CallsPage'),
+    return Scaffold(
+      backgroundColor: cardDark,
+      body: Container(
+        child:Center(child: Text('CallsPage' , style: TextStyle(color: textLigth),)),
+      ),
     );
   }
 }

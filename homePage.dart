@@ -5,18 +5,14 @@ import 'package:chat_app/pages/notification_page.dart';
 // import 'package:chat_app/responsive/responsive_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:chat_app/theme.dart';
+import 'package:chat_app/theme.dart';
 
 
 
-  class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage extends StatelessWidget {
+  HomePage({super.key});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
+  final ValueNotifier<int> PageIndex = ValueNotifier(0);
 
   final Pages = const[
     MessagesPage(),
@@ -25,17 +21,21 @@ class _HomePageState extends State<HomePage> {
     ContactsPage(),
   ];
 
-  var index = 0;
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Pages[index],
+      backgroundColor: cardDark,
+      body: ValueListenableBuilder(
+        valueListenable: PageIndex,
+        builder: (BuildContext context, int value, _) {
+          return Pages[value];
+        },
+        ),
       bottomNavigationBar: _BottomNavigationBar(
-        onItemSelected: (i) {
-          print(index);
-          setState(() {
-            index = i;
-          });
+        onItemSelected: (index) {
+          PageIndex.value=index;
         },
       ),
     );
@@ -43,19 +43,16 @@ class _HomePageState extends State<HomePage> {
 }
 
 
-
-  
-
-  
-
-
-
-
-class _BottomNavigationBar extends StatelessWidget {
+class _BottomNavigationBar extends StatefulWidget {
   const _BottomNavigationBar({super.key, required this.onItemSelected,});
 
   final ValueChanged<int> onItemSelected;
 
+  @override
+  State<_BottomNavigationBar> createState() => _BottomNavigationBarState();
+}
+
+class _BottomNavigationBarState extends State<_BottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return  SafeArea(
@@ -66,28 +63,28 @@ class _BottomNavigationBar extends StatelessWidget {
           index: 0,
           lable: 'Messaging',
           icon: CupertinoIcons.bubble_left_bubble_right_fill,
-          onTap: onItemSelected,
+          onTap: widget.onItemSelected,
         ),
 
         _NavigationBarIcon(
           index: 1,
           lable: 'Notifications',
           icon: CupertinoIcons.bell_solid,
-          onTap: onItemSelected ,
+          onTap: widget.onItemSelected ,
         ),
 
         _NavigationBarIcon(
           index: 2,
           lable: 'Calls',
           icon: CupertinoIcons.phone_fill,
-          onTap: onItemSelected,
+          onTap: widget.onItemSelected,
         ),
 
         _NavigationBarIcon(
           index: 3,
           lable: 'Contacts',
           icon: CupertinoIcons.person_2_fill,
-          onTap: onItemSelected,
+          onTap: widget.onItemSelected,
         ),
         
 
@@ -115,6 +112,7 @@ class _NavigationBarIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () {
         onTap(index);
       },
@@ -123,8 +121,9 @@ class _NavigationBarIcon extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 20, color: Color.fromARGB(255, 133, 134, 135),),
-            Text(lable, style: const TextStyle(fontSize: 11, color: Color.fromARGB(255, 69, 78, 84)),),
+            Icon(icon, size: 20, color: iconLight,),
+            SizedBox(height: 8.3,),
+            Text(lable, style: const TextStyle(fontSize: 11, color: textLigth),),
           ],
         ),
       ),
