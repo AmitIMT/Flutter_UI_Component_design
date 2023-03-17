@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 
 
 class NotificationPage extends StatelessWidget {
@@ -6,8 +7,11 @@ class NotificationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('NotificationPage'),
+    return Scaffold(
+      backgroundColor: cardDark,
+      body: Container(
+        child:Center(child: Text('NotificationPage' , style: TextStyle(color: textLigth),)),
+      ),
     );
   }
 }

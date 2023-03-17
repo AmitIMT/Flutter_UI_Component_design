@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 
 
 class MessagesPage extends StatelessWidget {
   const MessagesPage({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('MessagesPage'),
+    return Scaffold(
+      backgroundColor: cardDark,
+      body: Container(
+        child:Center(child: Text('MessagesPage' , style: TextStyle(color: textLigth),)),
+      ),
     );
   }
 }
